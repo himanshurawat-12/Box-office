@@ -25,7 +25,6 @@ const Home = () => {
   const onSearch = () => {
     getAPI(`/search/${searchOption}?q=${input}`).then(result => {
       setResult(result);
-      console.log('result', result);
     });
   };
 
