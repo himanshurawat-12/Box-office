@@ -7,13 +7,30 @@ import Seasons from '../components/show/Seasons';
 import Cast from '../components/show/Cast';
 import { ShowPageWrapper, InfoBlock } from './Show.styled';
 import { useShow } from '../misc/custom-hooks';
+import DotLoader from 'react-spinners/DotLoader';
 
 const Show = () => {
   const { id } = useParams();
   const { show, isLoading, error } = useShow(id);
+  const override = {
+    display: 'block',
+    margin: '0 auto',
+    borderColor: 'red',
+  };
 
   if (isLoading) {
-    return <div>Data is being loaded</div>;
+    return (
+      <div className="sweet-loading">
+        <DotLoader
+          color="#2400ff"
+          loading={isLoading}
+          cssOverride={override}
+          size={75}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+    );
   }
 
   if (error) {

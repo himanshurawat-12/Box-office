@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { DotLoader } from 'react-spinners';
 import MainPageLayout from '../components/MainPageLayout';
 import ShowGrid from '../components/show/ShowGrid';
 import { getAPI } from '../misc/config';
@@ -6,7 +7,6 @@ import { useShows } from '../misc/custom-hooks';
 
 const Starred = () => {
   const [starred] = useShows();
-
   const [shows, setShows] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,9 +30,26 @@ const Starred = () => {
     }
   }, [starred]);
 
+  const override = {
+    display: 'block',
+    margin: '0 auto',
+    borderColor: 'red',
+  };
+
   return (
     <MainPageLayout>
-      {isLoading && <div>Shows are still loading</div>}
+      {isLoading && (
+        <div className="sweet-loading">
+          <DotLoader
+            color="#2400ff"
+            loading={isLoading}
+            cssOverride={override}
+            size={75}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
       {error && <div>Error occured: {error}</div>}
       {!isLoading && !shows && <div>No shows were added</div>}
       {!isLoading && !error && shows && <ShowGrid data={shows} />}
